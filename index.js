@@ -12,5 +12,5 @@ PokemonList.prototype.addAll = function(json) {
 let pokemons = new PokemonList;
 pokemons.addAll(pokemonsData);
 console.dir(pokemons);
-hide('field/1/2/3', 'some data');
+hide('field/1/23',pokemons);
 seek();
