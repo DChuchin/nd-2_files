@@ -11,7 +11,6 @@ function createFolders(path='./field', count = 10) {
   });
 };
 
-
 function mkDirP(path) {
     let folders = path.split('/');
     return new Promise((resolve, reject) => {
@@ -37,7 +36,6 @@ function makeDir(path) {
     });
 };
 
-
 function twoDigit(num) {
     return (num < 10 ? '0' + num : num)
 };
@@ -62,8 +60,6 @@ function hidePokemon(pokemon, path) {
     });
 };
 
-
-
 module.exports = {
     hide: function(path, pokemonList) {
         let hiddenPokemons = [];
@@ -74,11 +70,20 @@ module.exports = {
                 let countRandomPokemons = pokemonList.length < 3 ? random(1 , pokemonList.length) : random(1,3);
                 for (let i = 0 ; i<countRandomPokemons; i++) {
                     let {info, pokemon}  = getRandomPokemon(pokemonList);
+                    while (hiddenPokemons.indexOf(pokemon) != -1) {
+                      let randomPokemon = getRandomPokemon(pokemonList);
+                      info = randomPokemon.info;
+                      pokemon = randomPokemon.pokemon;
+                    };
                     let randomFolder = twoDigit(random(1,10));
                     hiddenPokemons.push(pokemon);
                     hidePokemon(info, path + '/' + randomFolder);
+                  ;
                 };
-            });
+                console.log('------Hidden Pokemons:');
+                hiddenPokemons.forEach(item => item.show());
+            })
+            .catch(err => console.log(err));
   },
   seek: function () {
     console.log('seek');
