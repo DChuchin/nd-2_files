@@ -1,5 +1,6 @@
 const FileSystem = require('fs');
 const random = require('./random');
+const {Pokemon, PokemonList} = require('./pokemonList');
 
 function createFolders(path='./field', count = 10) {
   return new Promise((resolve,rejet)=> {
@@ -18,7 +19,11 @@ function mkDirP(path) {
             if (path == "." || path == "..") {
               return path + '/' + folder;
             };
-            FileSystem.mkdirSync(path, (err)=> reject(err));
+            FileSystem.mkdirSync(path, (err)=> {
+              if(err) {
+                reject(err);
+              };
+            });
             return path + '/' + folder;
         });
         resolve(res);
@@ -61,7 +66,9 @@ function hidePokemon(pokemon, path) {
 };
 
 module.exports = {
-    hide: function(path, pokemonList) {
+    hide: function(path, pokemonsData) {
+        let pokemonList = new PokemonList;
+        pokemonList.addAll(pokemonsData);
         let hiddenPokemons = [];
         mkDirP(path)
             .then(makeDir(path))

@@ -35,6 +35,12 @@ PokemonList.prototype.max = function() {
   return this.reduce((res,item)=> item > res ? item : res, this[0]);
 };
 
+PokemonList.prototype.addAll = function(obj) {
+  for (let prop in obj) {
+    this.add(prop, obj[prop]);
+  };
+};
+
 module.exports = {
   Pokemon,
   PokemonList
